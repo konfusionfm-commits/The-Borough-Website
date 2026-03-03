@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Borough | FiveM Roleplay</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080910;
+    --surface: #0e1018;
+    --surface2: #141720;
+    --border: #1c2030;
+    --border2: #242a3a;
+    --accent: #7eb3e0;
+    --accent2: #4a7fb5;
+    --accent3: #a8c8e8;
+    --text: #c4cad8;
+    --muted: #4a5268;
+    --white: #edf1fa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(8,9,16,0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    height: 64px;
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 5px;
+    color: var(--white);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .nav-logo .dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 8px rgba(126,179,224,0.6);
+    animation: pulse-dot 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(126,179,224,0.6); }
+    50%       { opacity: 0.5; box-shadow: 0 0 3px rgba(126,179,224,0.2); }
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0; right: 0;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  .nav-cad {
+    background: rgba(126,179,224,0.07) !important;
+    color: var(--accent) !important;
+    border: 1px solid rgba(126,179,224,0.18) !important;
+    padding: 8px 18px !important;
+    border-radius: 3px !important;
+    font-weight: 600 !important;
+    letter-spacing: 1.5px !important;
+    transition: all 0.35s cubic-bezier(0.4,0,0.2,1) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+  }
+
+  .nav-cad:hover {
+    background: rgba(126,179,224,0.13) !important;
+    border-color: rgba(126,179,224,0.35) !important;
+    color: var(--accent3) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 20px rgba(126,179,224,0.1) !important;
+  }
+
+  .nav-cad::after { display: none !important; }
+  .nav-cad svg { width: 13px; height: 13px; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 80px 48px 48px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 35%, rgba(74,127,181,0.07) 0%, transparent 65%),
+      radial-gradient(ellipse 45% 45% at 75% 25%, rgba(126,179,224,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 50% at 20% 80%, rgba(74,127,181,0.035) 0%, transparent 60%),
+      linear-gradient(180deg, #080910 0%, #0b0d16 60%, #080910 100%);
+  }
+
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+
+  .hero-orb-1 {
+    width: 500px; height: 380px;
+    top: -80px; left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(circle, rgba(74,127,181,0.08) 0%, transparent 70%);
+    animation: orb1 13s ease-in-out infinite;
+  }
+
+  .hero-orb-2 {
+    width: 280px; height: 280px;
+    bottom: 80px; right: -40px;
+    background: radial-gradient(circle, rgba(126,179,224,0.05) 0%, transparent 70%);
+    animation: orb2 16s ease-in-out infinite;
+  }
+
+  @keyframes orb1 {
+    0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+    50%       { transform: translateX(-50%) translateY(-28px); opacity: 0.65; }
+  }
+
+  @keyframes orb2 {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 0.7; }
+    50%       { transform: translateY(-18px) scale(1.08); opacity: 1; }
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(126,179,224,0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(126,179,224,0.022) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 900px;
+  }
+
+  .hero-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    opacity: 0;
+    animation: fade-up 1s 0.1s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
+
+  .hero-tag::before,
+  .hero-tag::after {
+    content: '';
+    width: 48px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent));
+    opacity: 0.35;
+  }
+
+  .hero-tag::after {
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(68px, 11vw, 132px);
+    line-height: 0.9;
+    letter-spacing: 10px;
+    color: var(--white);
+    margin-bottom: 10px;
+    opacity: 0;
+    animation: fade-up 1s 0.25s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
+
+  .hero h1 span {
+    -webkit-text-stroke: 1px var(--accent2);
+    color: transparent;
+  }
+
+  .hero-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(13px, 1.8vw, 18px);
+    letter-spacing: 7px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 52px;
+    opacity: 0;
+    animation: fade-up 1s 0.4s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fade-up 1s 0.55s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
+
+  .btn-primary {
+    background: var(--accent2);
+    color: var(--white);
+    padding: 13px 34px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(168,200,232,0.15), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .btn-primary:hover {
+    background: #5a8fc5;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(74,127,181,0.28);
+  }
+
+  .btn-primary:hover::before { opacity: 1; }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    padding: 13px 34px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--border2);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+    border-radius: 2px;
+  }
+
+  .btn-secondary:hover {
+    border-color: rgba(126,179,224,0.4);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(126,179,224,0.06);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 52px;
+    justify-content: center;
+    margin-top: 72px;
+    padding-top: 48px;
+    border-top: 1px solid var(--border);
+    opacity: 0;
+    animation: fade-up 1s 0.7s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
+
+  .stat { text-align: center; }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    color: var(--accent3);
+    letter-spacing: 2px;
+    line-height: 1;
+    transition: color 0.35s ease;
+  }
+
+  .stat:hover .stat-num { color: var(--white); }
+
+  .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 5px;
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 100px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+    opacity: 0.75;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(38px, 5vw, 60px);
+    letter-spacing: 5px;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 18px;
+  }
+
+  .section-desc {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.9;
+    max-width: 520px;
+    margin-bottom: 52px;
+    font-weight: 300;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent2) 0%, transparent 55%);
+    margin-bottom: 52px;
+    opacity: 0.2;
+  }
+
+  /* ── ABOUT GRID ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; }
+    nav { padding: 0 20px; }
+    .nav-links { gap: 16px; }
+    section { padding: 72px 20px; }
+    .hero { padding: 80px 20px 48px; }
+    .hero-stats { gap: 24px; flex-wrap: wrap; }
+  }
+
+  /* ── FEATURE CARDS ── */
+  .feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 32px;
+    position: relative;
+    transition: transform 0.45s cubic-bezier(0.4,0,0.2,1),
+                border-color 0.45s ease,
+                box-shadow 0.45s ease;
+    overflow: hidden;
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 2px;
+    height: 0;
+    background: linear-gradient(180deg, var(--accent3), var(--accent2));
+    transition: height 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .feature-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(74,127,181,0.04), transparent);
+    opacity: 0;
+    transition: opacity 0.45s ease;
+  }
+
+  .feature-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 48px rgba(0,0,0,0.45);
+  }
+
+  .feature-card:hover::before { height: 100%; }
+  .feature-card:hover::after  { opacity: 1; }
+
+  .feature-icon {
+    font-size: 22px;
+    margin-bottom: 14px;
+    opacity: 0.8;
+  }
+
+  .feature-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .feature-card p {
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+
+  /* ── STAFF ── */
+  #staff { background: var(--surface); width: 100%; max-width: 100%; padding: 100px 0; }
+  #staff .inner { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+
+  .staff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .staff-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 28px 20px;
+    text-align: center;
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1),
+                border-color 0.4s ease,
+                box-shadow 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .staff-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    transform: scaleX(0);
+    transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .staff-card:hover {
+    border-color: rgba(126,179,224,0.18);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+  }
+
+  .staff-card:hover::before { transform: scaleX(1); }
+
+  .staff-avatar {
+    width: 68px; height: 68px;
+    border-radius: 50%;
+    background: var(--border);
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    color: var(--accent);
+    border: 1px solid var(--border2);
+    overflow: hidden;
+    transition: border-color 0.4s ease;
+  }
+
+  .staff-card:hover .staff-avatar {
+    border-color: rgba(126,179,224,0.3);
+  }
+
+  .staff-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .staff-role {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 2px;
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+  }
+
+  .role-owner   { background: rgba(200,169,110,0.1);  color: #c8a96e; border: 1px solid rgba(200,169,110,0.2); }
+  .role-coowner { background: rgba(168,200,232,0.1);  color: var(--accent3); border: 1px solid rgba(168,200,232,0.2); }
+  .role-admin   { background: rgba(140,100,220,0.1);  color: #b090e0; border: 1px solid rgba(140,100,220,0.2); }
+  .role-mod     { background: rgba(74,127,181,0.1);   color: var(--accent); border: 1px solid rgba(74,127,181,0.2); }
+  .role-dev     { background: rgba(60,180,130,0.1);   color: #5ac89a; border: 1px solid rgba(60,180,130,0.2); }
+
+  /* ── STORE ── */
+  .store-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .store-grid { grid-template-columns: 1fr; }
+    #staff .inner { padding: 0 20px; }
+  }
+
+  .store-section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    grid-column: 1 / -1;
+  }
+
+  .store-section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .store-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: transform 0.45s cubic-bezier(0.4,0,0.2,1),
+                box-shadow 0.45s ease,
+                border-color 0.45s ease;
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+  }
+
+  .store-card.featured {
+    border-color: rgba(126,179,224,0.18);
+    background: linear-gradient(160deg, var(--surface) 0%, rgba(74,127,181,0.04) 100%);
+  }
+
+  .store-card.featured::after {
+    content: 'POPULAR';
+    position: absolute;
+    top: 18px; right: -26px;
+    background: var(--accent2);
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 42px;
+    transform: rotate(45deg);
+    transform-origin: center;
+  }
+
+  .store-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 52px rgba(0,0,0,0.45);
+    border-color: rgba(126,179,224,0.14);
+  }
+
+  .store-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 4px;
+    color: var(--white);
+  }
+
+  .store-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    color: var(--accent3);
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+
+  .store-price span {
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    color: var(--muted);
+    letter-spacing: 0;
+    font-weight: 300;
+  }
+
+  .store-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    flex: 1;
+  }
+
+  .store-features li {
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .store-features li::before {
+    content: '';
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--accent2);
+    flex-shrink: 0;
+    opacity: 0.65;
+  }
+
+  .btn-store {
+    background: transparent;
+    color: var(--accent);
+    padding: 11px 22px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(126,179,224,0.25);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+    text-align: center;
+    display: block;
+    border-radius: 2px;
+  }
+
+  .btn-store:hover {
+    background: rgba(74,127,181,0.13);
+    border-color: var(--accent);
+    color: var(--accent3);
+    box-shadow: 0 4px 20px rgba(74,127,181,0.14);
+  }
+
+  .btn-store.btn-store-filled {
+    background: rgba(74,127,181,0.18);
+    color: var(--accent3);
+    border-color: rgba(126,179,224,0.35);
+  }
+
+  .btn-store.btn-store-filled:hover {
+    background: rgba(74,127,181,0.28);
+    box-shadow: 0 8px 32px rgba(74,127,181,0.18);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 40px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 6px;
+    color: var(--muted);
+    opacity: 0.4;
+    transition: opacity 0.3s ease;
+  }
+
+  .footer-logo:hover { opacity: 0.8; }
+
+  .footer-copy {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    opacity: 0.4;
+  }
+
+  /* ── PAGE SWITCHER ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.65s cubic-bezier(0.4,0,0.2,1),
+                transform 0.65s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent2); }
+
+  /* full-width section wrapper */
+  .full-section {
+    background: var(--surface);
+    width: 100%;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#" onclick="showPage('home')">
+    <span class="dot"></span>THE BOROUGH
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('about')">About</a></li>
+    <li><a href="#" onclick="showPage('staff')">Staff</a></li>
+    <li><a href="#" onclick="showPage('store')">Store</a></li>
+    <li>
+      <a class="nav-cad" href="https://sonorancad.com" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        Sonoran CAD
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<!-- ══ HOME PAGE ══ -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-tag">The Next Generation of Roleplay</div>
+      <h1>THE <span>BOROUGH</span></h1>
+      <p class="hero-sub">Your Life, Your Rules.</p>
+      <div class="hero-btns">
+        <a class="btn-primary" href="#" onclick="showPage('about')">Discover The Server</a>
+        <a class="btn-secondary" href="#" onclick="showPage('store')">View Store</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">128</div>
+          <div class="stat-label">Player Slots</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">24/7</div>
+          <div class="stat-label">Online</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">50+</div>
+          <div class="stat-label">Custom Jobs</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">CAD</div>
+          <div class="stat-label">Integrated</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ABOUT PAGE ══ -->
+<div id="page-about" class="page">
+  <section style="padding-top: 120px;">
+    <div class="section-label">About The Server</div>
+    <h2 class="section-title">Welcome to<br>The Borough</h2>
+    <p class="section-desc">
+      The Borough is a serious, immersive FiveM roleplay server built by roleplayers, for roleplayers.
+      Set in a living, breathing city. Every shift, every case, every deal matters.
+    </p>
+    <div class="divider"></div>
+
+    <div class="about-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon">🚓</div>
+        <h3>Metropolitan Police</h3>
+        <p>Full Sonoran CAD integration, realistic traffic stops, detailed police procedures, multiple divisions including RPU, CID, ERPT and AFO.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">🏥</div>
+        <h3>London Ambulance Server</h3>
+        <p>A fully developed medical experience with advanced injury systems, hospital roleplay, and high quality training ensuring high quality standards around the clock.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">⚖️</div>
+        <h3>Court Roleplay</h3>
+        <p>Active court system with judges, lawyers, and prosecutors. Every charge can be contested. Justice is earned, not given.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">💼</div>
+        <h3>Civilian Life</h3>
+        <p>Over 50 civilian jobs from mechanic to real estate broker, an immersive roleplay experience for all to enjoy with realistic housing simulation.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">🌆</div>
+        <h3>Custom Map & Assets</h3>
+        <p>Unique MLOs, custom interiors, and exclusive vehicle liveries make The Borough unlike any other server you've played on. We strive to ensure your experience is as smooth as possible with the most realistic touch.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">🛡️</div>
+        <h3>Moderation Team</h3>
+        <p>A strong moderation team ensuring that the rules of The Borough are kept the highest standard, and your questions are awnsered from experience.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">🎯</div>
+        <h3>High Roleplay Standards</h3>
+        <p>At The Borough, roleplay standards should be kept to the highest standard. We ensure immersive roleplay is kept throughout in events and interactions.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">🔧</div>
+        <h3>Dedicated Development</h3>
+        <p>Regular updates in our development blog, custom scripts built in house, active developer team, and a direct feedback pipeline from community to development.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══ STAFF PAGE ══ -->
+<div id="page-staff" class="page">
+  <div class="full-section" style="padding-top: 64px;">
+    <section style="padding-top: 80px; max-width: 1200px; margin: 0 auto; padding-left: 48px; padding-right: 48px;">
+      <div class="section-label">Meet the Team</div>
+      <h2 class="section-title">The Borough<br>Staff</h2>
+      <p class="section-desc">
+        Our team works around the clock to keep The Borough running smoothly, fairly, and enjoyably for every member of our community. Our main focus is the community, the people that keep this community running.
+      </p>
+      <div class="divider"></div>
+
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:20px;display:flex;align-items:center;gap:16px;">
+        Ownership
+        <span style="flex:1;height:1px;background:var(--border);display:block;"></span>
+      </div>
+      <div class="staff-grid" style="margin-bottom:44px;">
+        <div class="staff-card reveal">
+          <div class="staff-avatar">B</div>
+          <div class="staff-name">Baggy</div>
+          <span class="staff-role role-founder">Founder</span>
+        </div>
+        <div class="staff-card reveal">
+          <div class="staff-avatar">K</div>
+          <div class="staff-name">Konfusion</div>
+          <span class="staff-role role-coowner">Senior Developer</span>
+        </div>
+      </div>
+
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:20px;display:flex;align-items:center;gap:16px;">
+        Management & Development
+        <span style="flex:1;height:1px;background:var(--border);display:block;"></span>
+      </div>
+      <div class="staff-grid" style="margin-bottom:44px;">
+        <div class="staff-card reveal">
+          <div class="staff-avatar">?</div>
+          <div class="staff-name">Vacant</div>
+          <span class="staff-role role-dev">Lead Developer</span>
+        </div>
+        <div class="staff-card reveal">
+          <div class="staff-avatar">?</div>
+          <div class="staff-name">Vacant</div>
+          <span class="staff-role role-admin">Head Moderator</span>
+        </div>
+        <div class="staff-card reveal">
+          <div class="staff-avatar">?</div>
+          <div class="staff-name">Vacant</div>
+          <span class="staff-role role-dev">Developer</span>
+        </div>
+      </div>
+
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:20px;display:flex;align-items:center;gap:16px;">
+        Moderation Team
+        <span style="flex:1;height:1px;background:var(--border);display:block;"></span>
+      </div>
+      <div class="staff-grid" style="margin-bottom:24px;">
+        <div class="staff-card reveal">
+          <div class="staff-avatar">?</div>
+          <div class="staff-name">Vacant</div>
+          <span class="staff-role role-admin">Admin</span>
+        </div>
+        <div class="staff-card reveal">
+          <div class="staff-avatar">?</div>
+          <div class="staff-name">Vacant</div>
+          <span class="staff-role role-mod">Moderator</span>
+        </div>
+        <div class="staff-card reveal">
+          <div class="staff-avatar">?</div>
+          <div class="staff-name">Vacant</div>
+          <span class="staff-role role-mod">Moderator</span>
+        </div>
+        <div class="staff-card reveal">
+          <div class="staff-avatar">?</div>
+          <div class="staff-name">Vacant</div>
+          <span class="staff-role role-mod">Moderator</span>
+        </div>
+      </div>
+
+      <p style="font-size:12px;color:var(--muted);margin-top:32px;opacity:0.45;">
+        This page may not be accurate, but is always updated as soon as possible.
+      </p>
+    </section>
+  </div>
+</div>
+
+<!-- ══ STORE PAGE ══ -->
+<div id="page-store" class="page">
+  <section style="padding-top: 120px;">
+    <div class="section-label">Support The Borough</div>
+    <h2 class="section-title">Server Store</h2>
+    <p class="section-desc">
+      All purchases are processed securely via Tebex. Supporting the server helps us keep the lights on and development rolling.
+    </p>
+    <div class="divider"></div>
+
+    <div class="store-grid" style="margin-bottom: 52px;">
+      <div class="store-section-title">Subscriptions</div>
+
+      <div class="store-card reveal">
+        <h3>Citizen Pass</h3>
+        <div class="store-price">£4.99 <span>/ month</span></div>
+        <ul class="store-features">
+          <li>Exclusive Citizen badge in Discord</li>
+          <li>Personalised Vehicle Plate</li>
+          <li>Access to members only channels with regular giveaways and</li>
+        </ul>
+        <a class="btn-store" href="https://your-store.tebex.io" target="_blank">Subscribe via Tebex</a>
+      </div>
+
+      <div class="store-card featured reveal">
+        <h3>Borough VIP</h3>
+        <div class="store-price">£9.99 <span>/ month</span></div>
+        <ul class="store-features">
+          <li>Top priority queue access</li>
+          <li>VIP Discord role & channels</li>
+          <li>Custom character name plate</li>
+          <li>Monthly in-game cash bonus</li>
+          <li>Exclusive VIP-only vehicle skins</li>
+          <li>Early access to new features</li>
+        </ul>
+        <a class="btn-store btn-store-filled" href="https://your-store.tebex.io" target="_blank">Subscribe via Tebex</a>
+      </div>
+    </div>
+
+    <div class="store-grid">
+      <div class="store-section-title">DLCs & One-Time Purchases</div>
+
+      <div class="store-card reveal">
+        <h3>Vehicle DLC Pack</h3>
+        <div class="store-price">£7.99</div>
+        <ul class="store-features">
+          <li>10 exclusive custom vehicles</li>
+          <li>Unique livery options</li>
+          <li>Permanent unlock, no expiry</li>
+        </ul>
+        <a class="btn-store" href="https://your-store.tebex.io" target="_blank">Purchase via Tebex</a>
+      </div>
+
+      <div class="store-card reveal">
+        <h3>Property Bundle</h3>
+        <div class="store-price">£12.99</div>
+        <ul class="store-features">
+          <li>Access to premium housing locations</li>
+          <li>Custom interior access</li>
+          <li>Stash storage upgrade</li>
+        </ul>
+        <a class="btn-store" href="https://your-store.tebex.io" target="_blank">Purchase via Tebex</a>
+      </div>
+
+      <div class="store-card reveal">
+        <h3>Character Slot</h3>
+        <div class="store-price">£4.99</div>
+        <ul class="store-features">
+          <li>One additional character slot</li>
+          <li>Separate inventory & progression</li>
+          <li>Up to 3 additional slots purchasable</li>
+        </ul>
+        <a class="btn-store" href="https://your-store.tebex.io" target="_blank">Purchase via Tebex</a>
+      </div>
+
+      <div class="store-card reveal">
+        <h3>Emote Pack DLC</h3>
+        <div class="store-price">£3.99</div>
+        <ul class="store-features">
+          <li>25+ exclusive custom emotes</li>
+          <li>Unique idle animations</li>
+          <li>Permanent account unlock</li>
+        </ul>
+        <a class="btn-store" href="https://your-store.tebex.io" target="_blank">Purchase via Tebex</a>
+      </div>
+    </div>
+
+    <div style="margin-top:44px;padding:22px 28px;background:var(--surface);border:1px solid var(--border);border-left:2px solid rgba(126,179,224,0.25);">
+      <p style="font-size:12px;color:var(--muted);line-height:1.8;">
+        <strong style="color:var(--white);font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;font-size:13px;">Notice:</strong>
+        All purchases are governed by our Terms of Service. The Borough does not offer refunds on digital goods unless for special circumstances.
+        Purchases support server infrastructure and development only they do not grant in game advantages that affect fair play.
+      </p>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">THE BOROUGH</div>
+  <div class="footer-copy">© 2026 The Borough. All rights reserved. Not affiliated with Rockstar Games or any real life emergency services.</div>
+</footer>
+
+<script>
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const page = document.getElementById('page-' + name);
+    page.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(initReveal, 60);
+  }
+
+  function initReveal() {
+    const els = document.querySelectorAll('.page.active .reveal');
+    if (!els.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const idx = Array.from(els).indexOf(entry.target);
+          setTimeout(() => entry.target.classList.add('visible'), idx * 55);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+
+    els.forEach(el => {
+      el.classList.remove('visible');
+      observer.observe(el);
+    });
+  }
+
+  initReveal();
+</script>
+</body>
+</html>
